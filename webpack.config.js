@@ -1,19 +1,26 @@
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
 
 module.exports = {
-  entry: './src/index.js',
+  mode: 'development',
+  entry: path.join(__dirname, 'src', 'index.ts'),
+  devtool: 'inline-source-map',
   plugins: [
     new HtmlWebpackPlugin({
       hash: true,
-      template: './src/index.html',
+      template: path.join(__dirname, 'src', 'index.html'),
       filename: 'index.html',
       inject: 'body'
-    })
+    }),
+    new CleanWebpackPlugin()
   ],
-  mode: 'development',
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
+  },
   output: {
-    //filename: './dist/main.js',
+    path: path.join(__dirname, 'dist'),
+    filename: '[name].[hash].js',
     clean: true
   },
   devServer: {
@@ -37,7 +44,7 @@ module.exports = {
         }
       },
       {
-        test: /\.css$/i,
+        test: /\.(css|less)$/i,
         use: [
           "style-loader",
           {
@@ -45,13 +52,19 @@ module.exports = {
             options: {
               modules: true
             }
-          }
+          },
+          "less-loader"
         ]
       },
       {
         test: /\.(png|jpe?g|gif)$/i,
         use: ['file-loader'],
-      }
+      },
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
     ]
   }
 }
