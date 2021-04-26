@@ -1,0 +1,30 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html,
+body,
+#app-wrapper {
+    height: 100vh;
+    overflow: hidden;
+}
+
+button {
+    background-color: rgb(255, 255, 255);
+    cursor: pointer;
+
+    height: fit-content;
+    width: 7vw;
+    color: rgb(39, 41, 41);
+    padding: 5px;
+    border: 1px solid rgb(148, 148, 150);
+    border-radius: 5px;
+    font-size: 0.8em;
+    font-family: sans-serif;
+}
+button:disabled {
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: default;
+}
