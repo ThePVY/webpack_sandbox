@@ -1,56 +1,48 @@
 import './index.less'
 
-interface IStack<T> {
-  push: (item: T) => T;
-  pop: () => T[];
-  peek: () => T;
-  getStack: () => Array<T>
+interface IListItem<T> {
+  value: T
+  next: IListItem<T>
 }
 
-class Stack<T> {
-  private stack: Array<T>
-  private last: number
-
-  constructor() {
-    this.stack = []
-    this.last = 0
+class ListItem<T> implements IListItem<T> {
+  value: T
+  next: IListItem<T>
+  
+  constructor(val: T, next?: IListItem<T>) {
+    this.value = val
+    this.next = next
   }
-
-  push(item: T): T {
-    return this.stack[this.last++] = item
-  }
-
-  pop() : T[] {
-    return this.stack.splice(--this.last, 1)
-  }
-
-  peek() : T {
-    return this.stack[this.last]
-  }
-
-  getStack(): Array<T> { return this.stack }
 }
 
-let st : IStack<any> = new Stack<any>()
+class LinkedList<T> {
+  private length: number = 0
+  private head: IListItem<T>
+  private prevNode: IListItem<T>
+  private currNode: IListItem<T>
 
-console.log('-----')
+  size() {
+    return this.length
+  }
 
-console.log('peek:', st.peek())
+  add(val : T) {
+    if(length === 0) {
+      this.prevNode = this.currNode = new ListItem(val)
+      this.length++
+    }
+    else {
+      this.currNode = new ListItem(val)
+      this.prevNode.next = this.currNode
+      this.length++
+    }
+  }
+}
 
-console.log(st.push('0'))
-console.log(st.push('1'))
-console.log(st.push('2'))
+console.log('done')
 
-console.log('stack:', st.getStack())
-console.log('peek:', st.peek())
 
-console.log(st.pop())
-console.log(st.pop())
-console.log(st.pop())
-console.log(st.pop())
-console.log(st.pop())
 
-console.log('stack:', st.getStack())
-console.log('peek:', st.peek())
+
+
 
 
